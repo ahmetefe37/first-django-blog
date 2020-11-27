@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Anasayfa{% endblock %}
+
+{% block body %}
+    <h1>Anasayfa</h1>
+    <h1>Hoşgeldin {{ request.user.get_full_name }}</h1>
+{% endblock %}

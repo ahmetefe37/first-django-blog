@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Post Detayları{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+
+                    <!-- sitedki post listesi -->
+                    <div class="col-md-11 p-2">
+
+                        <!-- bir card prototipi -->
+                        <div class="card">
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" class="img-thumbnail" alt="">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ post.title }}</h5>
+                                <p class="card-text">{{ post.content|safe|linebreaks }}</p>
+                                <p class="card-text"><small class="text-muted">{{ post.pub_date|timesince }}
+                                    önce</small></p>
+                                <h5 class="card-title"><small class="text-muted">{{ post.user }}</small></h5>
+                                <p class="card-text"><small class="text-danger">{{ post.id }}</small></p>
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-warning" href="{{ post.get_update_url }}">Değiştir</a>
+                                <a class="btn btn-danger" href="{{ post.get_delete_url }}">Kaldır</a>
+                            </div>
+                        </div>
+
+                        <!-- yorum yazma alanı -->
+                        <br>
+                        <hr>
+                        <h3>Yorum Alanı</h3>
+                        {% include "post/comment.html" %}
+                        <hr>
+                        <br>
+
+                        <!-- yorumların gözüktüğü alan -->
+                        {% for comment in post.comments.all %}
+                            <div class="media">
+                                <img src="" class="mr-3" alt="resim">
+                                <div class="media-body">
+                                    <h5 class="mt-0">{{ comment.name }}
+                                        <small class="text-muted">{{ comment.created_date|timesince }}</small>
+                                    </h5>
+                                    {{ comment.content|linebreaks }}
+                                </div>
+                            </div>
+                            <hr>
+                        {% endfor %}
+
+                    </div>
+
+                    <!-- sağ ve sol taraf arasındaki boşluk -->
+                    <div class="col-md-1"></div>
+
+                </div>
+            </div>
+            <div class="col-md-4 ml-auto"> </div>
+        </div>
+    </div>
+
+{% endblock %}

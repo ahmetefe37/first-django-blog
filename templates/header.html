@@ -1,0 +1,53 @@
+<nav class="nav navbar-expand-lg navbar-dark bg-dark p-2 fixed-top">
+    <a href="#" class="navbar-brand ml-2">MY BLOG</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#targetMenu"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle Navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="targetMenu">
+        <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+                <li class="nav-item active">
+                    <a href="{% url "post:create_url" %}" class="nav-link">Post Oluştur</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a href="{% url "home_url" %}" class="nav-link">Anasayfa</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url "post:index_url" %}" class="nav-link">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url "aboutme_url" %}" class="nav-link">Hakkımda</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url "contactme_url" %}" class="nav-link">İletişim</a>
+            </li>
+
+            <!-- kullanıcı giriş çıkış ve üye olma işlemleri -->
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item">
+                <a href="{% url "accounts:register_url" %}" class="nav-link">Üye Ol</a>
+            </li>
+            {% endif %}
+
+            {% if not request.user.is_authenticated %}
+            <li class="nav-item">
+                <a href="{% url "accounts:login_url" %}" class="nav-link">Giriş Yap</a>
+            </li>
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <a href="{% url "accounts:logout_url" %}" class="nav-link">Çıkış</a>
+            </li>
+            {% endif %}
+
+            <form class="form-inline my-2 my-lg-0">
+                <input type="text" name="q" placeholder="Sitede Ara..." value="{{ request.GET.q }}" aria-label="Search"
+                       class="form-control mr-sm-2">
+                <button type="submit" class="btn btn-outline-success my-sm-0 my-0">Ara</button>
+            </form>
+        </ul>
+    </div>
+</nav>
